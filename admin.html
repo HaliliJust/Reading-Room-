@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — The Reading Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+</head><body class="paper-bg app-page admin-page">
+<aside class="app-sidebar">
+  <a class="brand-mark" href="admin.html"><span class="mark-glyph">❝</span><span>The Reading Room</span></a>
+  <p class="sidebar-caption">ADMIN CONSOLE</p>
+  <nav class="sidebar-nav" aria-label="Admin navigation">
+    <button class="side-link active" data-admin-view="dashboard"><span>⌂</span>Dashboard</button>
+    <button class="side-link" data-admin-view="books"><span>▤</span>Book management</button>
+    <button class="side-link" data-admin-view="borrowing"><span>↔</span>Borrowing management <b class="nav-count" id="pendingNavCount">0</b></button>
+    <button class="side-link" data-admin-view="users"><span>♙</span>User management</button>
+    <button class="side-link" data-admin-view="history"><span>◷</span>Borrowing history</button>
+  </nav>
+  <div class="sidebar-bottom"><div class="sidebar-admin-card"><span class="avatar">A</span><span><strong>Admin</strong><small>Library manager</small></span></div><button class="side-link side-logout" id="adminLogout"><span>↪</span>Log out</button></div>
+</aside>
+<main class="app-main admin-main">
+  <header class="app-page-header"><div><p class="eyebrow">Staff workspace</p><h1 id="adminPageTitle">Dashboard</h1></div><span class="header-date" id="adminToday"></span></header>
+  <section class="admin-view active" id="adminViewDashboard">
+    <div class="admin-stat-grid">
+      <article class="admin-stat-card"><span>Catalog titles</span><strong id="adminStatBooks">0</strong><small>Books in the collection</small></article>
+      <article class="admin-stat-card"><span>Borrowers</span><strong id="adminStatUsers">0</strong><small>Active accounts</small></article>
+      <article class="admin-stat-card highlight"><span>Requests to review</span><strong id="adminStatPending">0</strong><small>Waiting for admin action</small></article>
+      <article class="admin-stat-card"><span>Overdue loans</span><strong id="adminStatOverdue">0</strong><small>Past the due date</small></article>
+    </div>
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Needs attention</p><h2>Recent borrowing activity</h2></div><button class="text-button" data-admin-view="borrowing">Manage requests →</button></div><div id="dashboardRecent" class="table-wrap"></div></div>
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Catalog overview</p><h2>Books with limited availability</h2></div><button class="text-button" data-admin-view="books">View all books →</button></div><div id="dashboardBooks" class="table-wrap"></div></div>
+  </section>
+  <section class="admin-view" id="adminViewBooks">
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Collection</p><h2>Book management</h2><p class="panel-sub">Add, edit, mark unavailable, or remove catalog titles.</p></div><button class="btn-primary compact" id="addBookBtn">＋ Add book</button></div><div class="table-toolbar"><input id="adminBookSearch" type="search" placeholder="Search title, author, or ID"><span id="adminBookCount"></span></div><div id="adminBooksTable" class="table-wrap"></div></div>
+  </section>
+  <section class="admin-view" id="adminViewBorrowing">
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Circulation desk</p><h2>Borrowing management</h2><p class="panel-sub">Review requests, approve or reject them, and process returns.</p></div><button class="outline-button" id="refreshBorrowing">Refresh records</button></div><div class="filter-row admin-filters"><button class="filter-chip active" data-loan-filter="action">Needs action</button><button class="filter-chip" data-loan-filter="all">All open loans</button><button class="filter-chip" data-loan-filter="overdue">Overdue</button></div><div id="adminBorrowingTable" class="table-wrap"></div></div>
+  </section>
+  <section class="admin-view" id="adminViewUsers">
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Accounts</p><h2>User management</h2><p class="panel-sub">Create, update, suspend, or remove borrower accounts.</p></div><button class="btn-primary compact" id="addUserBtn">＋ Add borrower</button></div><div class="table-toolbar"><input id="adminUserSearch" type="search" placeholder="Search username, name, or email"><span id="adminUserCount"></span></div><div id="adminUsersTable" class="table-wrap"></div></div>
+  </section>
+  <section class="admin-view" id="adminViewHistory">
+    <div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Archive</p><h2>Borrowing history</h2><p class="panel-sub">All requests, loans, returns, cancellations, and decisions.</p></div><button class="outline-button" id="refreshHistory">Refresh history</button></div><div class="table-toolbar"><input id="historySearch" type="search" placeholder="Search borrower, book, or status"><span id="historyCount"></span></div><div id="adminHistoryTable" class="table-wrap"></div></div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="bookModal" role="dialog" aria-modal="true"><div class="modal-box form-modal"><button class="modal-close" data-close-modal="bookModal" aria-label="Close">×</button><p class="eyebrow">Catalog editor</p><h3 id="bookModalTitle">Add a book</h3><form id="bookForm" novalidate><input type="hidden" id="bookOriginalId"><div class="form-grid"><div class="field"><label for="bookId">Book ID</label><input id="bookId" required maxlength="20"><div class="field-error" id="bookIdError"></div></div><div class="field"><label for="bookTitle">Title</label><input id="bookTitle" required maxlength="160"><div class="field-error" id="bookTitleError"></div></div><div class="field"><label for="bookAuthor">Author</label><input id="bookAuthor" required maxlength="100"><div class="field-error" id="bookAuthorError"></div></div><div class="field"><label for="bookCategory">Category</label><input id="bookCategory" required maxlength="60"><div class="field-error" id="bookCategoryError"></div></div><div class="field"><label for="bookQuantity">Copies</label><input id="bookQuantity" type="number" min="1" max="10000" required><div class="field-error" id="bookQuantityError"></div></div><label class="checkbox-field"><input id="bookAvailable" type="checkbox" checked><span>Available for borrowing</span></label></div><div class="modal-actions"><button class="modal-btn-cancel" type="button" data-close-modal="bookModal">Cancel</button><button class="modal-btn-confirm" type="submit">Save book</button></div></form></div></div>
+
+<div class="modal-overlay" id="userModal" role="dialog" aria-modal="true"><div class="modal-box form-modal"><button class="modal-close" data-close-modal="userModal" aria-label="Close">×</button><p class="eyebrow">Borrower account</p><h3 id="userModalTitle">Add borrower</h3><form id="userForm" novalidate><input type="hidden" id="userOriginalId"><div class="form-grid"><div class="field"><label for="userName">Display name</label><input id="userName" required maxlength="80"><div class="field-error" id="userNameError"></div></div><div class="field"><label for="userUsername">Username</label><input id="userUsername" required maxlength="32"><div class="field-error" id="userUsernameError"></div></div><div class="field"><label for="userEmail">Email</label><input id="userEmail" type="email" required><div class="field-error" id="userEmailError"></div></div><div class="field"><label for="userPassword">Password <small id="userPasswordHint"></small></label><input id="userPassword" type="password" autocomplete="new-password"><div class="field-error" id="userPasswordError"></div></div><label class="checkbox-field" id="userActiveWrap"><input id="userActive" type="checkbox" checked><span>Account active</span></label></div><div class="modal-actions"><button class="modal-btn-cancel" type="button" data-close-modal="userModal">Cancel</button><button class="modal-btn-confirm" type="submit">Save borrower</button></div></form></div></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="dot"></span><span id="toastText"></span></div>
+<script src="app-common.js"></script><script src="admin.js"></script>
+</body></html>

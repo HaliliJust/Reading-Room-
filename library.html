@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reading Room — Borrower Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="paper-bg app-page">
+<header class="top-bar">
+  <a class="brand-mark" href="library.html"><span class="mark-glyph">❝</span> The Reading Room</a>
+  <div class="top-right"><span class="member-welcome">Welcome, <strong id="whoName">member</strong></span><a class="profile-shortcut" href="#status" aria-label="Open your borrowing status" id="borrowerProfileLink"><span class="avatar" id="avatarLetter">M</span><span class="profile-shortcut-label">My profile</span></a><button class="top-logout" id="borrowerLogout" type="button">Log out</button></div>
+</header>
+<main class="dash-wrap borrower-home">
+  <div class="dash-head"><div><p class="eyebrow">Borrower dashboard</p><h1>Information Technology Shelf</h1><p>Browse the collection and send a borrowing request to the library.</p></div><div class="stat-row"><div class="stat-chip"><strong id="statAvailable">0</strong><span>Available copies</span></div><div class="stat-chip"><strong id="statBorrowed">0</strong><span>On loan</span></div><div class="stat-chip"><strong id="statMine">0</strong><span>Your open requests</span></div></div></div>
+  <div class="search-row" id="shelfSearchRow"><div class="search-input-wrap"><span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span><input type="search" id="searchInput" placeholder="Search by title, author, or book ID" autocomplete="off"></div></div>
+  <div class="filter-row borrower-tabs"><button class="filter-chip active" data-view="titles">All titles</button><button class="filter-chip" data-view="available">Available</button><button class="filter-chip" data-view="unavailable">Unavailable</button><button class="filter-chip" data-view="status">Borrowing status</button><button class="filter-chip" data-view="history">History</button><button class="filter-chip" data-view="bookBorrowed">Book Borrowed</button></div>
+  <section class="borrower-view active" id="viewTitles"><div class="book-grid" id="bookGrid" aria-live="polite"></div></section>
+  <section class="borrower-view" id="viewStatus"><div class="account-summary"><article class="admin-stat-card"><span>Pending requests</span><strong id="myPendingCount">0</strong></article><article class="admin-stat-card"><span>Books on loan</span><strong id="myBorrowedCount">0</strong></article><article class="admin-stat-card"><span>Overdue</span><strong id="myOverdueCount">0</strong></article></div><div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Your current activity</p><h2>Requests and borrowed books</h2></div></div><div id="myStatusList" class="table-wrap"></div></div></section>
+  <section class="borrower-view" id="viewHistory"><div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Your records</p><h2>History</h2><p class="panel-sub">Includes requests, approvals, returns, and cancellations.</p></div><button class="outline-button" id="refreshMyHistory">Refresh</button></div><div id="myHistoryTable" class="table-wrap"></div></div></section>
+  <section class="borrower-view" id="viewBookBorrowed"><div class="admin-panel"><div class="panel-heading"><div><p class="eyebrow">Current loans</p><h2>Book Borrowed</h2><p class="panel-sub">Books currently on loan to you. Confirm a return after bringing books back to the library.</p></div></div><div id="myBorrowedTable" class="table-wrap"></div></div></section>
+</main>
+<footer class="site-foot">The Reading Room · Library Borrowing System</footer>
+<div class="modal-overlay" id="requestModal" role="dialog" aria-modal="true" aria-labelledby="requestTitle"><div class="modal-box"><button class="modal-close" type="button" data-close-modal="requestModal" aria-label="Close">×</button><div class="modal-icon">📚</div><p class="eyebrow">Borrowing request</p><h3 id="requestTitle">Request this book?</h3><p id="requestBookInfo"></p><div class="field"><label for="requestQuantity">Number of copies</label><input id="requestQuantity" type="number" min="1" max="5" value="1"><div class="field-error" id="requestQuantityError"></div></div><div class="modal-actions"><button class="modal-btn-cancel" data-close-modal="requestModal">Cancel</button><button class="modal-btn-confirm" id="submitRequest">Send request</button></div></div></div>
+<div class="modal-overlay" id="editRequestModal" role="dialog" aria-modal="true"><div class="modal-box"><button class="modal-close" data-close-modal="editRequestModal" aria-label="Close">×</button><p class="eyebrow">Edit request</p><h3>Update requested copies</h3><p id="editRequestBook"></p><div class="field"><label for="editRequestQuantity">Number of copies</label><input id="editRequestQuantity" type="number" min="1" max="5"><div class="field-error" id="editRequestQuantityError"></div></div><div class="modal-actions"><button class="modal-btn-cancel" data-close-modal="editRequestModal">Cancel</button><button class="modal-btn-confirm" id="saveRequestEdit">Save request</button></div></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="dot"></span><span id="toastText"></span></div>
+<script src="app-common.js"></script><script src="script.js"></script>
+</body>
+</html>

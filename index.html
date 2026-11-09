@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reading Room — Log In or Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="paper-bg">
+
+
+<!-- ============================================================
+     AUTH SCREEN (Log In / Create Account)
+     Only shown on this page — no library content here.
+     ============================================================ -->
+<div class="screen active" id="authScreen">
+  <div class="auth-shell">
+
+
+    <aside class="auth-side">
+      <div class="brand-mark"><span class="mark-glyph">Ⓡ</span> The Reading Room</div>
+
+
+      <div class="side-copy">
+        <p class="eyebrow">Library Borrowing System</p>
+        <h1>Every book has a <em>card</em>.<br>Every card, a story.</h1>
+        <p>Sign in to browse the Information Technology shelf, borrow a book, and return it when you're done. One copy, one borrower, no mix-ups.</p>
+      </div>
+
+
+      <div class="ledger-stats">
+        <div><strong>15</strong><span>IT titles on shelf</span></div>
+        <div><strong>1</strong><span>copy per title</span></div>
+        <div><strong>7d</strong><span>standard loan</span></div>
+      </div>
+    </aside>
+
+
+    <main class="auth-main">
+      <div class="auth-card">
+
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabLoginBtn" onclick="switchTab('login')">Log In</button>
+          <button class="auth-tab" id="tabCreateBtn" onclick="switchTab('create')">Create Account</button>
+        </div>
+
+
+        <!-- LOGIN PANE -->
+        <section class="form-pane active" id="loginPane">
+          <h2 class="panel-title">Welcome back</h2>
+          <p class="panel-sub">Log in with your library card credentials.</p>
+
+
+          <div class="form-banner" id="loginBanner"></div>
+
+
+          <form id="loginForm" novalidate>
+            <div class="field">
+              <label for="loginUsername">Username</label>
+              <input type="text" id="loginUsername" placeholder="Username" autocomplete="username">
+              <div class="field-error" id="loginUsernameError">Incorrect username.</div>
+            </div>
+
+
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <div class="field-input-wrap">
+                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+                <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Show password">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="eye-path" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle class="eye-path" cx="12" cy="12" r="3"/>
+                    <path class="eye-off-path" d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94M9.9 4.24A9.7 9.7 0 0 1 12 5c7 0 11 7 11 7a21.6 21.6 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path class="eye-off-path" d="M1 1l22 22"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="field-error" id="loginPasswordError">Incorrect password.</div>
+            </div>
+
+
+            <button type="submit" class="btn-primary">Log In</button>
+          </form>
+
+
+          <p class="switch-note">New to the library? <button type="button" onclick="switchTab('create')">Create an account</button><br><span class="admin-entry-note">Library staff? <button type="button" id="openAdminLogin">Admin login</button></span></p>
+        </section>
+
+
+        <!-- CREATE ACCOUNT PANE -->
+        <section class="form-pane" id="createPane">
+          <h2 class="panel-title">Create your account</h2>
+          <p class="panel-sub">Register for a library card in under a minute.</p>
+
+
+          <div class="form-banner" id="createBanner"></div>
+
+
+          <form id="createForm" novalidate>
+            <div class="field">
+              <label for="newUsername">Username</label>
+              <input type="text" id="newUsername" placeholder="Choose a username (4+ characters)" autocomplete="off">
+              <div class="field-error" id="newUsernameError">Username must be at least 4 characters.</div>
+            </div>
+
+
+            <div class="field">
+              <label for="newPassword">Password</label>
+              <div class="field-input-wrap">
+                <input type="password" id="newPassword" placeholder="Create a password" autocomplete="new-password">
+                <button type="button" class="pw-toggle" data-target="newPassword" aria-label="Show password">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="eye-path" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle class="eye-path" cx="12" cy="12" r="3"/>
+                    <path class="eye-off-path" d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94M9.9 4.24A9.7 9.7 0 0 1 12 5c7 0 11 7 11 7a21.6 21.6 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path class="eye-off-path" d="M1 1l22 22"/>
+                  </svg>
+                </button>
+              </div>
+              <ul class="pw-rules" id="pwRules">
+                <li data-rule="len">At least 8 characters</li>
+                <li data-rule="upper">One capital letter</li>
+                <li data-rule="lower">One lowercase letter</li>
+                <li data-rule="num">One number</li>
+                <li data-rule="special">One special character</li>
+              </ul>
+              <div class="field-error" id="newPasswordError">Password must be at least 8 characters and include one capital letter, one lowercase letter, one number, and one special character.</div>
+            </div>
+
+
+            <div class="field">
+              <label for="confirmPassword">Confirm Password</label>
+              <div class="field-input-wrap">
+                <input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password">
+                <button type="button" class="pw-toggle" data-target="confirmPassword" aria-label="Show password">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path class="eye-path" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle class="eye-path" cx="12" cy="12" r="3"/>
+                    <path class="eye-off-path" d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94M9.9 4.24A9.7 9.7 0 0 1 12 5c7 0 11 7 11 7a21.6 21.6 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path class="eye-off-path" d="M1 1l22 22"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="field-error" id="confirmPasswordError">Passwords do not match.</div>
+            </div>
+
+
+            <div class="field">
+              <label for="newEmail">Email Address</label>
+              <input type="email" id="newEmail" placeholder="you@example.com" autocomplete="email">
+              <div class="field-error" id="newEmailError">Please enter a valid email address.</div>
+            </div>
+
+
+            <button type="submit" class="btn-primary">Create Account</button>
+          </form>
+
+
+          <p class="switch-note">Already have a card? <button type="button" onclick="switchTab('login')">Log in</button></p>
+        </section>
+
+
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="adminLoginModal" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle">
+  <div class="modal-box auth-modal">
+    <button class="modal-close" type="button" id="closeAdminLogin" aria-label="Close admin login">×</button>
+    <div class="modal-icon">♙</div>
+    <p class="eyebrow">Staff access</p>
+    <h3 id="adminLoginTitle">Admin login</h3>
+    <p>Sign in to manage books, borrowers, and loans.</p>
+    <form id="adminLoginForm" novalidate>
+      <div class="field"><label for="adminUsername">Username</label><input id="adminUsername" autocomplete="username" required><div class="field-error" id="adminUsernameError"></div></div>
+      <div class="field"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" required><div class="field-error" id="adminPasswordError"></div></div>
+      <button class="btn-primary" type="submit">Log in as admin</button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast" id="toast"><span class="dot"></span><span id="toastText"></span></div>
+
+
+<script src="app-common.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
